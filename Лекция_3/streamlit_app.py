@@ -326,6 +326,12 @@ with tab_search:
                         st.markdown(f"🔗 [{r['url']}]({r['url']})")
                         st.markdown(f"**Источник:** {src}")
                         st.markdown(f"**Идентификатор:** `{r['identifier']}`")
+                        if r.get("journal"):
+                            st.markdown(f"**Журнал:** {r['journal']}")
+                        if r.get("authors"):
+                            st.markdown(f"**Авторы:** {r['authors']}")
+                        if r.get("published"):
+                            st.markdown(f"**Дата:** {r['published']}")
                         st.markdown("**Резюме:**")
                         if r.get("summary"):
                             st.write(r["summary"])

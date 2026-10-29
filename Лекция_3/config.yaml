@@ -5,10 +5,11 @@
 topics:
   - "medical multi-agent"
 
-# Подключённые источники поиска (по умолчанию). Доступно: archive, arxiv
+# Подключённые источники поиска (по умолчанию). Доступно: archive, arxiv, pubmed
 sources:
   - "archive"
   - "arxiv"
+  - "pubmed"
 
 # Чем строить резюме: sumy, ollama или openai.
 summarizer: sumy
