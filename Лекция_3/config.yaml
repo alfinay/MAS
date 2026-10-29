@@ -4,6 +4,8 @@
 # List of keywords or topics to monitor on archiv.org
 topics:
   - "medical multi-agent"
+  - "diabetes machine learning"
+  - "cancer immunotherapy"
 
 # Подключённые источники поиска (по умолчанию). Доступно: archive, arxiv, pubmed
 sources:
