@@ -215,7 +215,7 @@ with st.sidebar:
         help="Для проверки лучше выключить, чтобы одни и те же результаты можно было получать снова.",
     )
     st.caption(f"В истории сейчас записей: **{len(get_history())}**")
-    if st.button("🗑 Очистить историю", use_container_width=True):
+    if st.button("🗑 Очистить историю", width="stretch"):
         HISTORY_PATH.write_text("[]", encoding="utf-8")
         st.success("История очищена.")
         st.rerun()
@@ -356,7 +356,7 @@ with tab_search:
                     )
                 st.dataframe(
                     df,
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                     column_config={"Ссылка": st.column_config.LinkColumn("Ссылка")},
                 )

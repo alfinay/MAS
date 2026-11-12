@@ -1,7 +1,9 @@
 # requirements.txt
-requests==2.32.3
-beautifulsoup4==4.12.3
-pyyaml==6.0.2
-sumy==0.11.0
-apscheduler==3.10.4
-streamlit==1.38.0
+# Без жёстких версий: сервер Streamlit Cloud ставит свежий Python (3.14),
+# а старые закреплённые версии (streamlit 1.38 → pillow 10) под него не собираются.
+requests>=2.32
+beautifulsoup4>=4.12
+pyyaml>=6.0
+sumy>=0.11
+apscheduler>=3.10
+streamlit>=1.50

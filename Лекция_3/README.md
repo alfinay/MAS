@@ -150,7 +150,7 @@ history_size: 1000
 
 ## Установка
 
-Нужен Python 3.13. Зависимости перечислены в `requirements.txt`: `requests`, `beautifulsoup4`, `pyyaml`, `sumy`, `apscheduler`, `streamlit`.
+Нужен Python 3.10 или новее (проверено на 3.11 локально и 3.14 на Streamlit Cloud). Зависимости перечислены в `requirements.txt` без жёстких версий: `requests`, `beautifulsoup4`, `pyyaml`, `sumy`, `apscheduler`, `streamlit>=1.50`. Старые закреплённые версии (streamlit 1.38) на Python 3.14 не устанавливаются: им нужен pillow 10, для которого нет сборки под 3.14.
 
 ```bash
 cd /Users/edwfa/Documents/antigravity/brave-mendeleev/multi_agent_archiv
