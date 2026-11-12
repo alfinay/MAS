@@ -1,7 +1,7 @@
 # scraper.py
 """Агент-координатор поиска.
 
-Опрашивает подключённые агенты-источники (archive.org, arXiv.org, PubMed …),
+Опрашивает подключённые агенты-источники (archive.org, arXiv.org, PubMed, medRxiv …),
 отбрасывает уже просмотренные записи, передаёт остальные валидатору
 и возвращает список новых релевантных записей.
 
@@ -16,6 +16,7 @@ from typing import Dict, List, Optional
 import archive_agent
 import arxiv_agent
 import pubmed_agent
+import medrxiv_agent
 from utils import load_config, get_history, update_history, resolve_date_range
 from validator import validate_item  # валидатор релевантности
 
@@ -26,6 +27,7 @@ SOURCES = {
     archive_agent.SOURCE_ID: archive_agent,
     arxiv_agent.SOURCE_ID: arxiv_agent,
     pubmed_agent.SOURCE_ID: pubmed_agent,
+    medrxiv_agent.SOURCE_ID: medrxiv_agent,
 }
 # Человекочитаемые названия источников (для интерфейса)
 SOURCE_NAMES = {sid: mod.SOURCE_NAME for sid, mod in SOURCES.items()}

@@ -5,3 +5,4 @@ main.log
 history.json
 diagr/agents.visual-check.*
 .DS_Store
+nltk_data/

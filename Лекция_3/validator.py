@@ -14,7 +14,7 @@ from utils import extract_text_from_url, token_is_exact, topic_tokens
 logger = logging.getLogger("archiv_tracker.validator")
 
 # Источники, у которых аннотация приходит из API: страницу не загружаем
-ABSTRACT_SOURCES = {"arxiv", "pubmed"}
+ABSTRACT_SOURCES = {"arxiv", "pubmed", "medrxiv"}
 
 
 def _token_in_text(token: str, text: str) -> bool:
@@ -70,7 +70,7 @@ def validate_item(item: Dict, topics: List[str]) -> bool:
         logger.info(f"✅ {ident}: тема «{topic}» найдена в заголовке или аннотации")
         return True
 
-    # 2. Для arXiv и PubMed заголовка и аннотации достаточно – страницу не загружаем.
+    # 2. Для arXiv, PubMed и medRxiv заголовка и аннотации достаточно – страницу не загружаем.
     if item.get("source") in ABSTRACT_SOURCES:
         logger.info(f"❌ {ident}: темы нет ни в заголовке, ни в аннотации – отклонено")
         return False

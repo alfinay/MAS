@@ -7,11 +7,11 @@ topics:
   - "diabetes machine learning"
   - "cancer immunotherapy"
 
-# Подключённые источники поиска (по умолчанию). Доступно: archive, arxiv, pubmed
+# Подключённые источники поиска (по умолчанию). Доступно: archive, arxiv, pubmed, medrxiv
+# Для проекта согласованы PubMed и medRxiv
 sources:
-  - "archive"
-  - "arxiv"
   - "pubmed"
+  - "medrxiv"
 
 # Чем строить резюме: sumy, ollama или openai.
 summarizer: sumy

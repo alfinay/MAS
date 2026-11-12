@@ -332,6 +332,8 @@ with tab_search:
                             st.markdown(f"**Авторы:** {r['authors']}")
                         if r.get("published"):
                             st.markdown(f"**Дата:** {r['published']}")
+                        if r.get("note"):
+                            st.warning(r["note"])
                         st.markdown("**Резюме:**")
                         if r.get("summary"):
                             st.write(r["summary"])

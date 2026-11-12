@@ -8,7 +8,9 @@ OpenAI-совместимый endpoint из секций ``providers`` / ``llm``
 
 import logging
 import os
+from pathlib import Path
 
+import nltk
 import requests
 
 # Импорты Sumy – чистый Python, без компилируемых расширений
@@ -20,6 +22,20 @@ from utils import load_config
 
 # Дочерний логгер – вывод настраивается у родителя «archiv_tracker» (utils.py)
 logger = logging.getLogger("archiv_tracker.summarizer")
+
+# Словарь NLTK для деления текста на предложения хранится в папке проекта:
+# так он есть и на сервере, куда приложение выложено, без ручной установки.
+NLTK_DIR = Path(__file__).parent / "nltk_data"
+nltk.data.path.insert(0, str(NLTK_DIR))
+
+
+def _ensure_punkt() -> None:
+    """Скачать ``punkt_tab`` в ``nltk_data/``, если его ещё нет."""
+    try:
+        nltk.data.find("tokenizers/punkt_tab/english/")
+    except LookupError:
+        logger.info("Загрузка словаря NLTK punkt_tab в nltk_data/ …")
+        nltk.download("punkt_tab", download_dir=str(NLTK_DIR), quiet=True)
 
 
 class LlmUnavailable(Exception):
@@ -101,6 +117,7 @@ def _get_summarizer() -> LsaSummarizer:
 
 def _summarize_lsa(text: str, max_sentences: int) -> str:
     """Построить резюме алгоритмом LSA (английский токенизатор)."""
+    _ensure_punkt()
     parser = PlaintextParser.from_string(text, Tokenizer("english"))
     summary_sentences = _get_summarizer()(parser.document, max_sentences)
     summary = " ".join(str(sentence) for sentence in summary_sentences)
