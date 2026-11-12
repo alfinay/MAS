@@ -9,7 +9,6 @@
 - Отправка на почту в тестовом режиме отключена.
 """
 
-import subprocess
 from pathlib import Path
 
 import pandas as pd
@@ -368,8 +367,9 @@ with tab_search:
         log_path = Path(__file__).parent / "main.log"
         if log_path.exists():
             try:
-                tail = subprocess.check_output(["tail", "-n", "20", str(log_path)])
-                st.text(tail.decode())
+                # Без внешней команды tail – так блок работает и в Windows
+                lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+                st.text("\n".join(lines[-20:]))
             except Exception as exc:
                 st.warning(f"Не удалось прочитать файл журнала: {exc}")
         else:
