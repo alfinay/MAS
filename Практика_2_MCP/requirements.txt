@@ -1,0 +1,5 @@
+# Python 3.11 или 3.12
+mcp>=2.3,<3          # официальный MCP SDK версии 2.x (MCPServer, stdio/SSE/HTTP-клиенты)
+streamlit>=1.50
+pandas>=2.0
+anyio>=4.0
