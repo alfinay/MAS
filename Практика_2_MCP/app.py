@@ -145,9 +145,14 @@ except Exception as exc:  # noqa: BLE001 — интерфейс не долже�
 
 # ---------- поиск и выбор инструмента ----------
 
-query = st.text_input("🔎 Поиск инструмента", placeholder="например: почки, GCS, диабет, BMI, PubMed")
+# У каждого источника своя строка поиска: слово от прошлого источника не мешает.
+query = st.text_input("🔎 Поиск инструмента", placeholder="например: почки, GCS, диабет, BMI, PubMed",
+                      key=f"search_{source}")
 q = query.strip().lower()
 found = [t for t in tools if not q or q in f"{t.name} {t.title} {t.description}".lower()]
+# Справочный list_calculators — в конец списка, первым показываем настоящий калькулятор.
+found.sort(key=lambda t: t.name == "list_calculators")
+st.caption(f"Инструментов у сервера: {len(tools)}, подходит под поиск: {len(found)}")
 if not found:
     st.info("Ничего не найдено. Попробуйте другое слово — русское или латинское.")
     st.stop()
