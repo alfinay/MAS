@@ -76,8 +76,8 @@ def load_tools(source: str):
         client = {"stdio": stdio_client, "sse": sse_client, "remote": remote_client}[source]
         tools, packets = run(client.list_tools)
         st.session_state[key] = tools
-        st.session_state["packets"] = packets
-        st.session_state["packets_title"] = f"tools/list — {SOURCES[source]}"
+        st.session_state[f"packets_{source}"] = packets
+        st.session_state[f"packets_title_{source}"] = f"tools/list — {SOURCES[source]}"
     return st.session_state[key]
 
 
@@ -277,8 +277,8 @@ if submitted:
             outcome = call(source, tool, args)
     except ToolError as exc:
         show_error("Инструмент вернул ошибку", exc.message)
-        st.session_state["packets"] = getattr(exc, "packets", [])
-        st.session_state["packets_title"] = f"tools/call {tool.name} — ошибка"
+        st.session_state[f"packets_{source}"] = getattr(exc, "packets", [])
+        st.session_state[f"packets_title_{source}"] = f"tools/call {tool.name} — ошибка"
     except ServerUnavailable as exc:
         show_error("Сетевой сервер недоступен", str(exc))
     except RemoteTimeout as exc:
@@ -286,8 +286,8 @@ if submitted:
     except Exception as exc:  # noqa: BLE001
         show_error("Непредвиденная ошибка, приложение продолжает работать", f"{type(exc).__name__}: {exc}")
     else:
-        st.session_state["packets"] = outcome.packets
-        st.session_state["packets_title"] = f"tools/call {tool.name} — {SOURCES[source]}"
+        st.session_state[f"packets_{source}"] = outcome.packets
+        st.session_state[f"packets_title_{source}"] = f"tools/call {tool.name} — {SOURCES[source]}"
         notes = getattr(outcome, "notes", [])
         if notes:
             with st.expander(f"Санитайзер исправил параметры: {len(notes)}", expanded=True):
@@ -309,8 +309,10 @@ if submitted:
 
 # ---------- инспектор JSON-RPC ----------
 
-packets = st.session_state.get("packets", [])
-with st.expander(f"🔬 Инспектор протокола MCP (JSON-RPC): {st.session_state.get('packets_title', '—')}"):
+# Последний обмен с текущим источником: tools/list при подключении, tools/call после расчёта.
+packets = st.session_state.get(f"packets_{source}", [])
+with st.expander(f"🔬 Инспектор протокола MCP (JSON-RPC): "
+                 f"{st.session_state.get(f'packets_title_{source}', '—')}"):
     if not packets:
         st.caption("Пакетов пока нет. Сделайте вызов — здесь появятся сырые запросы и ответы.")
     for p in packets:
